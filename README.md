@@ -65,7 +65,12 @@ Select the models to link to LM Studio:
 7. stable-code:3b-code-q5_K_M
 8. tinydolphin:1.1b-v2.8-q5_K_M
 
-Enter the model numbers (comma-separated), or press Enter to link all:
+Enter the model numbers (comma-separated), or press Enter to link all: 1
+Model: knoopx/hermes-2-pro-mistral:7b-q8_0
+Path: /Users/samm/.ollama/models/blobs/sha256:107d9516acb6a1f879b1fbfa283b399529ee0518b95b632c6a624b109ff9cdbf
+LM Studio model directory: /Users/samm/.cache/lm-studio/models/knoopx/hermes-2-pro-mistral-7b-q8-0-GGUF
+Removing existing symlink: /Users/samm/.cache/lm-studio/models/knoopx/hermes-2-pro-mistral-7b-q8-0-GGUF/sha256:107d9516acb6a1f879b1fbfa283b399529ee0518b95b632c6a624b109ff9cdbf
+Symlinked knoopx/hermes-2-pro-mistral:7b-q8_0 to /Users/samm/.cache/lm-studio/models/knoopx/hermes-2-pro-mistral-7b-q8-0-GGUF/sha256:107d9516acb6a1f879b1fbfa283b399529ee0518b95b632c6a624b109ff9cdbf
 ```
 
 ## Building

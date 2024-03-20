@@ -137,47 +137,47 @@ func main() {
 	}
 
 	for _, num := range selectedModels {
-		modelName := models[num-1]
+    modelName := models[num-1]
+    modelPath, err := getModelPath(modelName)
+    if err != nil {
+        fmt.Printf("Error getting model path for %s: %v\n", modelName, err)
+        continue
+    }
 
-		modelPath, err := getModelPath(modelName)
-		if err != nil {
-			fmt.Printf("Error getting model path for %s: %v\n", modelName, err)
-			continue
-		}
+    lmStudioModelName := strings.ReplaceAll(strings.ReplaceAll(modelName, ":", "-"), "_", "-")
+    lmStudioModelDir := filepath.Join(lmStudioModelsDir, lmStudioModelName+"-GGUF")
 
-		lmStudioModelName := strings.ReplaceAll(strings.ReplaceAll(modelName, ":", "-"), "_", "-")
-		lmStudioModelDir := filepath.Join(lmStudioModelsDir, lmStudioModelName+"-GGUF")
+    fmt.Printf("\033[1;36mModel:\033[0m %s\nPath: %s\n", modelName, modelPath)
+    fmt.Printf("\033[1;32mLM Studio model directory:\033[0m %s\n", lmStudioModelDir)
 
-		fmt.Printf("\033[1;36mModel:\033[0m %s\nPath: %s\n", modelName, modelPath)
-		fmt.Printf("\033[1;32mLM Studio model directory:\033[0m %s\n", lmStudioModelDir)
+    err = os.MkdirAll(lmStudioModelDir, os.ModePerm)
+    if err != nil {
+        fmt.Printf("Failed to create directory %s: %v\n", lmStudioModelDir, err)
+        continue
+    }
 
-		err = os.MkdirAll(lmStudioModelDir, os.ModePerm)
-		if err != nil {
-			fmt.Printf("Failed to create directory %s: %v\n", lmStudioModelDir, err)
-			continue
-		}
+    lmStudioModelPath := filepath.Join(lmStudioModelDir, filepath.Base(modelPath))
 
-		lmStudioModelPath := filepath.Join(lmStudioModelDir, lmStudioModelName+".gguf")
+    // if the symlink already exists, delete it
+    if _, err := os.Lstat(lmStudioModelPath); err == nil {
+        fmt.Printf("Removing existing symlink: %s\n", lmStudioModelPath)
+        err = os.Remove(lmStudioModelPath)
+        if err != nil {
+            fmt.Printf("Failed to remove symlink %s: %v\n", lmStudioModelPath, err)
+            continue
+        }
+    }
 
-		// if the symlink already exists, delete it
-		if _, err := os.Lstat(lmStudioModelPath); err == nil {
-			fmt.Printf("Removing existing symlink: %s\n", lmStudioModelPath)
-			err = os.Remove(lmStudioModelPath)
-			if err != nil {
-				fmt.Printf("Failed to remove symlink %s: %v\n", lmStudioModelPath, err)
-				continue
-			}
-		}
+    err = os.Symlink(modelPath, lmStudioModelPath)
+    if err != nil {
+        fmt.Printf("Failed to symlink %s: %v\n", modelName, err)
+    } else {
+        fmt.Printf("Symlinked %s to %s\n", modelName, lmStudioModelPath)
+    }
 
-		err = os.Symlink(modelPath, lmStudioModelPath)
-
-		if err != nil {
-			fmt.Printf("Failed to symlink %s: %v\n", modelName, err)
-		} else {
-
-			fmt.Printf("Symlinked %s to %s\n", modelName, lmStudioModelPath)
-		}
+		fmt.Println()
 	}
+
 
 	cleanBrokenSymlinks()
 }
