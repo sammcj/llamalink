@@ -31,12 +31,8 @@ or
 
 ## Usage
 
-- Open a terminal and navigate to the directory containing the executable file.
-- Run the program using the following command:
-
-```shell
-./llamalink
-```
+- Install the program using the instructions above.
+- Run `llamalink`
 
 - `-a` Link all models without prompting for selection.
 - `-ollama-dir` Specify a custom Ollama models directory.
