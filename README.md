@@ -31,8 +31,8 @@ or
 
 ## Usage
 
-- Install the program using the instructions above.
-- Run `llamalink`
+1. Install the program using the instructions above.
+2. Run `llamalink`
 
 - `-a` Link all models without prompting for selection.
 - `-ollama-dir` Specify a custom Ollama models directory.
