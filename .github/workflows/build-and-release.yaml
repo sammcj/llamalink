@@ -5,6 +5,10 @@ on:
     branches:
       - main
       - dev
+    paths:
+      - 'main.go'
+      - 'go.mod'
+      - '.github/workflows/build-and-release.yml'
     tags:
       - v*
   pull_request:
