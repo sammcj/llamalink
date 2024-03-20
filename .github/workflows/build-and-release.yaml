@@ -1,12 +1,23 @@
 name: Build and release
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+    branches:
+      - main
 
 permissions:
   contents: write
   checks: write
   pull-requests: write
   packages: write
+
+concurrency:
+  group: build-and-release
+  cancel-in-progress: true
 
 jobs:
   build-and-release:
@@ -46,7 +57,7 @@ jobs:
       # Bump version
       - name: Bump version and push tag
         id: tag_version
-        uses: mathieudutour/github-tag-action@v5
+        uses: mathieudutour/github-tag-action@v6.2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           release_branches: main
