@@ -29,7 +29,7 @@ Before using this program, ensure that you have the following:
 - Run the following command to build the program:
 
 ```shell
-go build -o llamalink
+go build
 ```
 
 This will create an executable file named ollama-lm-studio-linker (or ollama-lm-studio-linker.exe on Windows).
@@ -41,6 +41,12 @@ This will create an executable file named ollama-lm-studio-linker (or ollama-lm-
 
 ```shell
 ./llamalink
+```
+
+or non-interactively, linking all models:
+
+```shell
+./llamalink -a
 ```
 
 Configuration
