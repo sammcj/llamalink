@@ -23,6 +23,10 @@ Before using this program, ensure that you have the following:
 
 ## Installation
 
+- Run `go get github.com/sammcj/llamalink@latest`
+
+or
+
 - Download the latest build from the [releases page](https://github.com/sammcj/llamalink/releases).
 
 ## Usage
