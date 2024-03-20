@@ -70,6 +70,15 @@ func cleanBrokenSymlinks() {
 }
 
 func main() {
+	var allModels bool = false
+	// parse args (e.g. -a)
+	if len(os.Args) > 1 {
+		for _, arg := range os.Args[1:] {
+			if arg == "-a" {
+				allModels = true
+			}
+		}
+	}
 	printModelPaths()
 
 	models, err := getModelList()
@@ -94,14 +103,21 @@ func main() {
 	}
 
 	var selectedModels []int
-
-	fmt.Println()
-	fmt.Print("Enter the model numbers (comma-separated), or press Enter to link all: ")
 	var input string
 
-	fmt.Scanln(&input)
+	fmt.Println()
 
-	if input == "" {
+	if allModels != true {
+	fmt.Print("Enter the model numbers (comma-separated), or press Enter to link all: ")
+	var input string
+	fmt.Scanln(&input)
+	} else {
+		fmt.Println("Linking all models to LM Studio.")
+		input = ""
+	}
+
+	// if the input is empty, or if run with -a, link all models
+	if allModels {
 		for i := 1; i <= len(models); i++ {
 			selectedModels = append(selectedModels, i)
 		}
