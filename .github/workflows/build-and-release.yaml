@@ -42,13 +42,13 @@ jobs:
       # Build
       - name: Build macOS ARM64
         run: |
-          GOOS=darwin GOARCH=arm64 go build -o main.go -o llamalink-macos-arm64
+          GOOS=darwin GOARCH=arm64 go build -o main.go -o llamalink-macos-arm64${{ github.ref == 'refs/heads/dev' && '-dev' }}
           echo "macOS ARM64 build completed" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Build Linux
         run: |
-          GOOS=linux GOARCH=amd64 go build -o main.go -o llamalink-linux-amd64
-          GOOS=linux GOARCH=arm64 go build -o main.go -o llamalink-linux-arm64
+          GOOS=linux GOARCH=amd64 go build -o main.go -o llamalink-linux-amd64${{ github.ref == 'refs/heads/dev' && '-dev' }}
+          GOOS=linux GOARCH=arm64 go build -o main.go -o llamalink-linux-arm64${{ github.ref == 'refs/heads/dev' && '-dev' }}
           echo "Linux build completed" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload artefacts
@@ -56,9 +56,9 @@ jobs:
         with:
           name: llamalink
           path: |
-            llamalink-macos-arm64
-            llamalink-linux-amd64
-            llamalink-linux-arm64
+            llamalink-macos-arm64${{ github.ref == 'refs/heads/dev' && '-dev' }}
+            llamalink-linux-amd64${{ github.ref == 'refs/heads/dev' && '-dev' }}
+            llamalink-linux-arm64${{ github.ref == 'refs/heads/dev' && '-dev' }}
 
       # Bump version
       - name: Bump version and push tag
@@ -82,8 +82,8 @@ jobs:
           allowUpdates: true
           prerelease: ${{ startsWith(github.ref, 'refs/heads/dev') }}
           artifacts: |
-            llamalink-macos-arm64
-            llamalink-linux-amd64
-            llamalink-linux-arm64
+            llamalink-macos-arm64${{ github.ref == 'refs/heads/dev' && '-dev' }}
+            llamalink-linux-amd64${{ github.ref == 'refs/heads/dev' && '-dev' }}
+            llamalink-linux-arm64${{ github.ref == 'refs/heads/dev' && '-dev' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
