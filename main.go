@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"os/exec"
@@ -10,6 +11,13 @@ import (
 
 var ollamaModelsDir = filepath.Join(os.Getenv("HOME"), ".ollama", "models")
 var lmStudioModelsDir = filepath.Join(os.Getenv("HOME"), ".cache", "lm-studio", "models")
+
+func printHelp() {
+	fmt.Println("Usage: ollama-lm-studio-linker [options]")
+	fmt.Println("Options:")
+	fmt.Println("  -a    Link all available models")
+	fmt.Println("  -h    Print this help message")
+}
 
 // print the configured model paths
 func printModelPaths() {
@@ -70,15 +78,17 @@ func cleanBrokenSymlinks() {
 }
 
 func main() {
-	var allModels bool = false
-	// parse args (e.g. -a)
-	if len(os.Args) > 1 {
-		for _, arg := range os.Args[1:] {
-			if arg == "-a" {
-				allModels = true
-			}
-		}
+	// Parse command-line arguments
+	linkAllModels := flag.Bool("a", false, "Link all available models")
+	printHelpFlag := flag.Bool("h", false, "Print help message")
+	flag.Parse()
+
+	// Print help if -h flag is provided
+	if *printHelpFlag {
+		printHelp()
+		return
 	}
+
 	printModelPaths()
 
 	models, err := getModelList()
@@ -93,47 +103,42 @@ func main() {
 	}
 
 	fmt.Println("\033[1;56mSelect the models to link to LM Studio:\033[0m")
-	//"Select the models to link to LM Studio:")
-	for i, modelName := range models {
-		// colourise the model name
-		modelName = "\033[1;36m" + modelName + "\033[0m"
 
-		// colourise the number to red
+	for i, modelName := range models {
 		fmt.Printf("\033[1;31m%d.\033[0m %s\n", i+1, modelName)
 	}
 
 	var selectedModels []int
-	var input string
 
-	fmt.Println()
-
-	if allModels != true {
-	fmt.Print("Enter the model numbers (comma-separated), or press Enter to link all: ")
-	var input string
-	fmt.Scanln(&input)
-	} else {
-		fmt.Println("Linking all models to LM Studio.")
-		input = ""
-	}
-
-	// if the input is empty, or if run with -a, link all models
-	if allModels {
+	// If -a flag is provided, link all models
+	if *linkAllModels {
 		for i := 1; i <= len(models); i++ {
 			selectedModels = append(selectedModels, i)
 		}
 	} else {
+		fmt.Println()
+		fmt.Print("Enter the model numbers (comma-separated), or press Enter to link all: ")
+		var input string
+		fmt.Scanln(&input)
 
-		for _, numStr := range strings.Split(input, ",") {
-			var num int
-			fmt.Sscanf(numStr, "%d", &num)
-			if num >= 1 && num <= len(models) {
-				selectedModels = append(selectedModels, num)
+		if input == "" {
+			for i := 1; i <= len(models); i++ {
+				selectedModels = append(selectedModels, i)
+			}
+		} else {
+			for _, numStr := range strings.Split(input, ",") {
+				var num int
+				fmt.Sscanf(numStr, "%d", &num)
+				if num >= 1 && num <= len(models) {
+					selectedModels = append(selectedModels, num)
+				}
 			}
 		}
 	}
 
 	for _, num := range selectedModels {
 		modelName := models[num-1]
+
 		modelPath, err := getModelPath(modelName)
 		if err != nil {
 			fmt.Printf("Error getting model path for %s: %v\n", modelName, err)
