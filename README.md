@@ -18,21 +18,11 @@ This Go program is a command-line tool that allows you to easily link Ollama mod
 
 Before using this program, ensure that you have the following:
 
-- Go programming language installed on your system.
 - Ollama command-line tool installed and accessible from the system PATH.
-- Ollama models downloaded and stored in the default location (~/.ollama/models).
 
 ## Installation
 
-- Clone the repository or download the source code files.
-- Open a terminal and navigate to the directory containing the source code.
-- Run the following command to build the program:
-
-```shell
-go build
-```
-
-This will create an executable file named ollama-lm-studio-linker (or ollama-lm-studio-linker.exe on Windows).
+- Download the latest build from the [releases page](https://github.com/sammcj/llamalink/releases).
 
 ## Usage
 
@@ -57,6 +47,12 @@ The program uses the following default directories:
 - LM Studio models directory: ~/.cache/lm-studio/models
 
 If your Ollama models or LM Studio models are located in different directories, you can modify the ollamaModelsDir and lmStudioModelsDir variables in the source code accordingly.
+
+## Building
+
+```shell
+go build
+```
 
 ## License
 
