@@ -23,7 +23,7 @@ Before using this program, ensure that you have the following:
 
 ## Installation
 
-- Run `go get github.com/sammcj/llamalink@latest`
+- Run `go install github.com/sammcj/llamalink@latest`
 
 or
 
