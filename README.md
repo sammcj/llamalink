@@ -1,6 +1,6 @@
 # Ollama to LM Studio Model Linker
 
-This Go program is a command-line tool that allows you to easily link Ollama models to LM Studio's directory structure. It simplifies the process of symlinking Ollama models to LM Studio, making it convenient to use the models in both applications.
+This is a simple command-line tool that allows you to easily link Ollama models to LM Studio's directory structure. It simplifies the process of symlinking Ollama models to LM Studio, making it convenient to use the models in both applications.
 
 ## Features
 
@@ -11,6 +11,7 @@ This Go program is a command-line tool that allows you to easily link Ollama mod
 - Creates symlinks from the Ollama model paths to the corresponding LM Studio model paths.
 - Removes any existing symlinks before creating new ones to avoid conflicts.
 - Cleans up any broken symlinks in the LM Studio models directory.
+- Can be run interactively or non-interactively.
 
 ![screenshot](https://github.com/sammcj/llamalink/assets/862951/6559d22a-060f-42b9-9b31-e0c60f724d53)
 
