@@ -142,14 +142,18 @@ func syncConfigPresets(models []string, config *LlamaLinkConfig) error {
 	// Update the config map with the correct preset mappings
 	for _, modelName := range models {
 		// Determine the correct preset mapping based on the model name
+		// Determine the correct preset mapping based on the model name
 		var presetFile string
-		// ... (logic to determine the preset file based on the model name)
 
-		// Example logic: Use a specific preset file for models containing "codellama"
-		if strings.Contains(modelName, "codellama") {
-			presetFile = "codellama_instruct.preset.json"
+		// Check if the model name matches any of the preset patterns
+		for pattern, preset := range configMap["preset_map"].(map[string]interface{}) {
+			if matched, _ := regexp.MatchString(pattern, modelName); matched {
+				presetFile = preset.(string)
+				break
+			}
 		}
 
+		// Check if the preset file exists
 		if presetFile != "" {
 			// Check if the preset file exists
 			presetFilePath := filepath.Join(configPresetsDir, presetFile)
@@ -170,7 +174,7 @@ func syncConfigPresets(models []string, config *LlamaLinkConfig) error {
 		}
 	}
 
-	// Write the updated config map
+	// Save the updated config map
 	configMapData, err = json.MarshalIndent(configMap, "", "  ")
 	if err != nil {
 		return fmt.Errorf("failed to marshal config map JSON: %v", err)
@@ -184,6 +188,7 @@ func syncConfigPresets(models []string, config *LlamaLinkConfig) error {
 	log.Println("Config presets synced successfully")
 	return nil
 }
+
 
 func createConfigPresetFile(presetFilePath string) error {
 	// Create the config preset file with a default template
