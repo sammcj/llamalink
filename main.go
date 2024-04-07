@@ -57,6 +57,7 @@ func printHelp() {
 	fmt.Printf("  %s-skip-modelfile-sync%s  Skip syncing modelfiles\n", yellow, reset)
 	fmt.Printf("  %s-report-only%s  Generate a report without creating symlinks or manifests\n", yellow, reset)
 	fmt.Printf("  %s-show-config-preset%s  Show the config preset for a specific model\n", yellow, reset)
+	fmt.Printf("  %s-debug%s       Enable debug mode\n", yellow, reset)
 }
 
 func loadLlamaLinkConfig() (*LlamaLinkConfig, error) {
@@ -106,6 +107,12 @@ func saveLlamaLinkConfig(config *LlamaLinkConfig) error {
 	}
 
 	return nil
+}
+
+func debugPrint(debug bool, message string) {
+	if debug {
+		fmt.Printf("%sDEBUG:%s %s\n", purple, reset, message)
+	}
 }
 
 func syncConfigPresets(models []string, config *LlamaLinkConfig) error {
@@ -237,7 +244,7 @@ func syncModelfiles(config *LlamaLinkConfig) error {
 		}
 
 		if modelFilePath == "" {
-			// log.Printf("No model file found in folder %s", modelFolderPath)
+			debugPrint(config.ReportOnly, fmt.Sprintf("No model file found in folder %s", modelFolderPath))
 			continue
 		}
 
