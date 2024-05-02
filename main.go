@@ -43,7 +43,7 @@ const (
 func printHelp() {
 	fmt.Printf("%sUsage: llamalink [options]%s\n", brightWhite, reset)
 	fmt.Printf("%sOptions:%s\n", brightWhite, reset)
-	fmt.Printf("  %s-a%s           Link all available models\n", yellow, reset)
+	fmt.Printf("  %s-i%s           Run interactively to select specific models to link\n", yellow, reset)
 	fmt.Printf("  %s-h%s           Print this help message\n", yellow, reset)
 	fmt.Printf("  %s-ollama-dir%s  Custom Ollama models directory\n", yellow, reset)
 	fmt.Printf("  %s-lm-dir%s      Custom LM Studio models directory\n", yellow, reset)
@@ -584,7 +584,7 @@ func cleanupSymlinkedModels() {
 
 func main() {
 	// Parse command-line arguments
-	linkAllModels := flag.Bool("a", false, "Link all available models")
+	interactive := flag.Bool("i", false, "Run interactively to select specific models to link")
 	printHelpFlag := flag.Bool("h", false, "Print help message")
 	ollamaDirFlag := flag.String("ollama-dir", "", "Custom Ollama models directory")
 	lmStudioDirFlag := flag.String("lm-dir", "", "Custom LM Studio models directory")
@@ -673,7 +673,7 @@ func main() {
 	var selectedModels []int
 
 	// If -a flag is provided, link all models
-	if *linkAllModels {
+	if !*interactive {
 		for i := 1; i <= len(models); i++ {
 			selectedModels = append(selectedModels, i)
 		}

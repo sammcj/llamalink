@@ -35,7 +35,7 @@ Install the program using the instructions above.
 
 Run `llamalink`
 
-- `-a` Link all models without prompting for selection.
+- `-i` Run interactively to select which specific models to link.
 - `-ollama-dir` Specify a custom Ollama models directory.
 - `-lm-dir` Specify a custom LM Studio models directory.
 - `-min-size` Include only models over the given size (in GB or MB).
@@ -45,7 +45,7 @@ Run `llamalink`
 - `-cleanup` Remove all symlinked models and empty directories and exit.
 - `-h` Print the help message.
 
-If no flags are provided, the program will run interactively.
+If no flags are provided, the program will automatically link all models.
 
 ## Configuration
 
