@@ -1,6 +1,22 @@
 # Ollama to LM Studio Model Linker
 
-This is a simple command-line tool that allows you to easily link Ollama models to LM Studio's directory structure. It simplifies the process of symlinking Ollama models to LM Studio, making it convenient to use the models in both applications.
+## Depreciation Notice
+
+**Llamalink has been replaced!**
+
+Llamalink has been replaced with my new tool - **[Gollama](https://github.com/sammcj/gollama)**.
+
+Gollama is a more feature-rich and user-friendly tool that can link Ollama models to LM Studio and other applications.
+
+It is written in Go and has a TUI as well as a command-line interface. Please check it out if you are interested in linking Ollama models to LM Studio or if you are looking for a more versatile tool for managing Ollama models.
+
+![](https://github.com/sammcj/gollama/blob/main/screenshots/gollama-v1.0.0.jpg?raw=true)
+
+---
+
+## Deprecated llamaLink information follows
+
+Llamalink is a simple command-line tool that allows you to easily link Ollama models to LM Studio's directory structure. It simplifies the process of symlinking Ollama models to LM Studio, making it convenient to use the models in both applications.
 
 ## Features
 
